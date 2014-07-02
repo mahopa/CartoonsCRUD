@@ -1,0 +1,28 @@
+﻿<div>
+    <input type="text" ng-model="search.name" placeholder="search" />
+    <input type="text" ng-model="newCartoon.name" />
+    <input type="text" ng-model="newCartoon.year" />
+    <button ng-click="AddCartoon(newCartoon)">Add Cartoon</button>
+    <button ng-click="order='name'">Name</button>
+    <input type="number" ng-model="number" />
+    <table>
+        <tr><th>Name</th><th>Year</th></tr>
+        <tr ng-repeat="cartoon in cartoons | filter:search |orderBy:order | limitTo: number || 5">
+            <td>
+                <span ng-hide="editing">{{cartoon.name }}</span>
+                <input ng-show="editing" type="text" ng-model="cartoon.name" />
+            </td>
+            <td>
+                <span ng-hide="editing">{{cartoon.year}}</span>
+                <input ng-show="editing" type="text" ng-model="cartoon.year" />
+            </td>
+
+            <td>
+                <button ng-show="editing" ng-click="DeleteCartoon(cartoon)">Delete</button>
+                <button ng-show="editing" ng-click="editing=false">Cancel/Save</button>
+                <button ng-hide="editing" ng-click="editing=true">Edit</button>
+            </td>
+        </tr>
+    </table>
+
+</div>

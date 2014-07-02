@@ -4,27 +4,9 @@
     <title></title>
 </head>
 <body>
-    <div ng-controller="AddController">
-        <input type="text" ng-model="newCartoon.name" />
-        <input type="text" ng-model="newCartoon.year" />
-        <button ng-click="AddCartoon(newCartoon)">Add Cartoon</button>
-        <table>
-            <tr><th>Name</th><th>Year</th></tr>
-            <tr ng-repeat="cartoon in cartoons">
-                <td>
-                    {{cartoon.name}}
-                    <input type="text" ng-model="cartoon.name" />
-                </td>
-                <td>
-                    {{cartoon.year}}
-                    <input type="text" ng-model="cartoon.year" />
-                </td>
-
-                <td>{{cartoon}} <button ng-click="DeleteCartoon(cartoon)">Delete</button></td>
-            </tr>
-        </table>
-
-    </div>
+    <a href="#/Details">Details</a>
+    <ng-view></ng-view>
+    
 
 
     <script src="Scripts/angular.js"></script>
