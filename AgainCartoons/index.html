@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="Cartoons">
+<head>
+    <title></title>
+</head>
+<body>
+    <div ng-controller="AddController">
+        <input type="text" ng-model="newCartoon.name" />
+        <input type="text" ng-model="newCartoon.year" />
+        <button ng-click="AddCartoon(newCartoon)">Add Cartoon</button>
+        <table>
+            <tr><th>Name</th><th>Year</th></tr>
+            <tr ng-repeat="cartoon in cartoons">
+                <td>
+                    {{cartoon.name}}
+                    <input type="text" ng-model="cartoon.name" />
+                </td>
+                <td>
+                    {{cartoon.year}}
+                    <input type="text" ng-model="cartoon.year" />
+                </td>
+
+                <td>{{cartoon}} <button ng-click="DeleteCartoon(cartoon)">Delete</button></td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/_myJS.js"></script>
+</body>
+</html>
