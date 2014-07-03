@@ -1,4 +1,10 @@
-﻿<div>
+﻿<script>
+    app.controller("Testing", function ($scope, CartoonsFactory) {
+        $scope.cartoons = CartoonsFactory;
+
+    });
+</script>
+<div>
     <input type="text" ng-model="search.name" placeholder="search" />
     <input type="text" ng-model="newCartoon.name" />
     <input type="text" ng-model="newCartoon.year" />
@@ -18,7 +24,8 @@
             </td>
 
             <td>
-                <button ng-show="editing" ng-click="DeleteCartoon(cartoon)">Delete</button>
+                <button ng-show="editing" ng-hide="deleting" ng-click="DeleteCartoon(cartoon); deleting=true;">Delete</button>
+                <span ng-show="deleting">Deleting....</span>
                 <button ng-show="editing" ng-click="editing=false">Cancel/Save</button>
                 <button ng-hide="editing" ng-click="editing=true">Edit</button>
             </td>
@@ -26,3 +33,4 @@
     </table>
 
 </div>
+
