@@ -1,6 +1,6 @@
 ﻿
 <div>
-    <input type="text" ng-model="search.name" placeholder="search" />
+    <input type="text" ng-model="search" placeholder="search" ng-init="search = ''" />
     <input type="text" ng-model="newCartoon.name" />
     <input type="text" ng-model="newCartoon.year" />
     <button ng-click="AddCartoon(newCartoon)">Add Cartoon</button>
@@ -8,17 +8,19 @@
     <input type="number" ng-model="number" />
     <table>
         <tr><th>Name</th><th>Year</th></tr>
-        <tr ng-repeat="cartoon in cartoons | filter:search |orderBy:order | limitTo: number || 5">
+        <tr ng-repeat="cartoon in cartoons | filter: query |orderBy:order | limitTo: number || cartoons.length   ">
             <td>
-                <span ng-hide="editing">{{cartoon.name }}</span>
+                <span ng-hide="editing">{{cartoon.name}}</span>
                 <input ng-show="editing" type="text" ng-model="cartoon.name" />
             </td>
             <td>
+                {{cartoon.key}}
                 <span ng-hide="editing">{{cartoon.year}}</span>
                 <input ng-show="editing" type="text" ng-model="cartoon.year" />
             </td>
-
+         
             <td>
+                <a href="#/Details/{{cartoon.name}}">Details</a>
                 <button ng-show="editing" ng-hide="deleting" ng-click="DeleteCartoon(cartoon); deleting=true;">Delete</button>
                 <span ng-show="deleting">Deleting....</span>
                 <button ng-show="editing" ng-click="editing=false">Cancel/Save</button>

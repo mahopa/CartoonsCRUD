@@ -1,4 +1,11 @@
 ﻿var app = angular.module("Cartoons", ["ngRoute"]);
+app.filter("RemoveSpaces", function () {
+    return function (text) {
+        //return "Something Crazy!";
+        return text.split(" ").join("");
+    }
+
+});
 app.factory("CartoonsFactory", function () {
     return [
         //{ name: "Invader Zim", year: "The Future" },
@@ -17,21 +24,41 @@ app.config(function ($routeProvider) {
         templateUrl: "Views/home.html",
         controller:"AddController"
     });
-    $routeProvider.when("/Details", {
-        template: "This is the details page",
-         controller:"AddController"
+    $routeProvider.when("/Details/:chosen", {
+        template: "{{chosenCartoon}}",
+         controller:"DetailsController"
     })
     $routeProvider.otherwise({
         templateUrl: "Views/error.html",
         controller: "ErrorController"
     });
 });
+app.controller("DetailsController",
+    function ($scope, CartoonsFactory, $routeParams, $location) {
 
+        
+        $scope.chosenCartoon = null;
+        for (var c in CartoonsFactory) {
+            if (CartoonsFactory[c].name === $routeParams.chosen) {
+                $scope.chosenCartoon = CartoonsFactory[c];
+            }
+        }
+        if (!$scope.chosenCartoon) {
+            //Redirect
+            $location.path("/404");
+        }
+});
 app.controller("AddController", function ($scope, CartoonsFactory, $http) {
+    $scope.query = function (item) {
+        if (item.year.toLowerCase().indexOf($scope.search.toLowerCase()) != -1 || item.name.indexOf($scope.search) != -1) {
+            return true;
+        }
+        return false;
+    }
     $scope.cartoons = CartoonsFactory;
     $scope.getCartoons = function () {
-        if ($scope.cartoons.length) { }
-        else {
+        if (!$scope.cartoons.length) {
+            //if empty get things from firebase
             $http.get("https://domo.firebaseio.com/.json")
                   .success(function (data, status, headers, config) {
                       for (var x in data) {
@@ -40,8 +67,8 @@ app.controller("AddController", function ($scope, CartoonsFactory, $http) {
                       }
                   })
                   .error(function () { })
-
         }
+      
     };
     $scope.AddCartoon = function (neCartoon) {
         var c = { name: neCartoon.name, year: neCartoon.year };
